@@ -17,7 +17,7 @@ class CivicAgent():
             accessibility standards. You understand follow proper government formatting conventions. You are familiar with various Indian government notice types 
             including maintenance, emergency, tender, tax, recruitment, and public meeting notices.''',
             verbose = False,
-            allow_delegation = False,
+            allow_delegation = True,
             llm = self.llm
         )
     
