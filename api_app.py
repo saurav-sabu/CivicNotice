@@ -105,7 +105,7 @@ class CivicCrew():
             self.contact_number = contact_number
             self.email = email
             self.additional_notes = additional_notes
-            self.llm = LLM(model="gemini/gemini-2.0-flash")
+            self.llm = LLM(model="gemini/gemini-2.5-flash")
             logger.info("CivicCrew initialized with title: %s", self.title)
         except Exception as e:
             logger.error(f"Error initializing CivicCrew: {e}")

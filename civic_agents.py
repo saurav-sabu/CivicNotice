@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 class CivicAgent():
     def __init__(self):
         # Initialize the LLM model for use by agents
-        self.llm = LLM(model="gemini/gemini-2.0-flash")
-        logger.info("Initialized CivicAgent with LLM model: gemini/gemini-2.0-flash")
+        self.llm = LLM(model="gemini/gemini-2.5-flash")
+        logger.info("Initialized CivicAgent with LLM model: gemini/gemini-2.5-flash")
 
     def public_notice_generator_agent(self):
         """
