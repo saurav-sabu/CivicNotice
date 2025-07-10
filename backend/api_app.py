@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, Literal
 from civic_agents import CivicAgent
 from civic_tasks import CivicTask
 import os
@@ -60,6 +60,7 @@ class AnnouncementRequest(BaseModel):
     date: str = Field(..., description="Date of the notice in DD/MM/YYYY format")
     location: str = Field(..., description="Location related to the notice")
     audience: str = Field(..., description="Target audience for the notice")
+    language: Literal["English", "Hindi", "Marathi"] = Field("English", description="Language of the notice")
     category: str = Field(..., description="Category of the notice (e.g., maintenance, emergency, tender, etc.)")
     department: str = Field(..., description="Department responsible for the notice")
     contact_officer: str = Field(..., description="Name of the contact officer for the notice")
@@ -92,13 +93,14 @@ def get_settings():
 
 # Main class to handle the crew logic
 class CivicCrew():
-    def __init__(self, title, body, date, location, audience, category, department, contact_officer, contact_number, email, additional_notes):
+    def __init__(self, title, body, date, location, audience, language, category, department, contact_officer, contact_number, email, additional_notes):
         try:
             self.title = title
             self.body = body
             self.date = date
             self.location = location
             self.audience = audience
+            self.language = language
             self.category = category
             self.department = department
             self.contact_officer = contact_officer
@@ -134,6 +136,7 @@ class CivicCrew():
                     date=self.date,
                     location=self.location,
                     audience=self.audience,
+                    language=self.language,
                     category=self.category,
                     department=self.department,
                     contact_officer=self.contact_officer,
@@ -141,7 +144,7 @@ class CivicCrew():
                     email=self.email,
                     additional_notes=self.additional_notes
                 )
-                review_notice_task = task.indian_notice_reviewer_task(agent=indian_notice_reviewer)
+                review_notice_task = task.indian_notice_reviewer_task(agent=indian_notice_reviewer,language=self.language)
             except Exception as e:
                 logger.error(f"Error creating tasks: {e}")
                 raise
@@ -191,6 +194,7 @@ async def generate_notice(request: AnnouncementRequest):
             body=request.body,
             date=request.date,
             location=request.location,
+            language=request.language,
             audience=request.audience,
             category=request.category,
             department=request.department,
