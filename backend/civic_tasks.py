@@ -19,22 +19,24 @@ class CivicTask():
     """
 
     def generate_indian_notice_task(
-        self, agent, title, body, date, location, audience, category,
+        self, agent, title, body, date, location, audience, language, category,
         department, contact_officer, contact_number, email, additional_notes
     ):
         """
         Creates a Task for generating a professional Indian government public notice.
         """
-        logger.info("Generating Indian government public notice task with title: %s", title)
+        logger.info("Generating Indian government public notice task with title: %s in language: %s", title, language)
+        
         # Prepare the Task object with detailed instructions and expected output
         task = Task(
             description=f'''
-            Generate a professional Indian government public notice in English only based on the following input:
+            Generate a professional Indian government public notice in {language} based on the following input:
             - Title: {title}
             - Body: {body}
             - Date: {date}
             - Location: {location}
             - Audience: {audience}
+            - Language: {language}
             - Category: {category}
             - Department: {department}
             - Contact Officer: {contact_officer}
@@ -46,53 +48,55 @@ class CivicTask():
             1. Use appropriate government letterhead format
             2. Include proper authority designation
             3. Follow Indian date format (DD/MM/YYYY)
-            4. Include RTI compliance note
-            5. Use formal yet accessible English language
-            6. Include proper contact information
-            7. Follow category-specific formatting
-            8. Ensure cultural sensitivity and respect
-            9. Include government seal/signature line
+            4. Use formal language appropriate for the specified language
+            5. Include proper contact information
+            6. Follow category-specific formatting
+            7. Ensure cultural sensitivity and respect
+            8. Include government seal/signature line
+            9. Format the entire notice in markdown
             
-            IMPORTANT: Provide ONLY the final formatted notice content. Do not include any explanatory text, comments, or additional information.
+            IMPORTANT: Provide ONLY the final formatted notice content in {language} using markdown format. Do not include any explanatory text, comments, or additional information.
             ''',
-            expected_output='A complete, professionally formatted Indian government public notice in English ready for publication (notice content only, no explanations)',
+            expected_output=f'A complete, professionally formatted Indian government public notice in {language} using markdown format, ready for publication (notice content only, no explanations)',
             agent=agent
         )
-        logger.info("Task for generating notice created successfully.")
+        logger.info("Task for generating notice in %s created successfully.", language)
         return task
 
-    def indian_notice_reviewer_task(self, agent):
+    def indian_notice_reviewer_task(self, agent, language):
         """
         Creates a Task for reviewing an Indian government public notice.
         """
-        logger.info("Creating Indian government public notice reviewer task.")
+        logger.info("Creating Indian government public notice reviewer task for language: %s", language)
+        
         # Prepare the Task object with review instructions and expected output
         task = Task(
-            description='''
-            Review the generated Indian government public notice and ensure it meets all official standards:
+            description=f'''
+            Review the generated Indian government public notice in {language} and ensure it meets all official standards:
             
+            General Compliance Checks:
             1. Check compliance with Indian government communication standards
-            2. Verify RTI compliance and transparency requirements
-            3. Ensure proper English language formatting
-            4. Check cultural sensitivity and appropriate tone
-            5. Verify all required contact information is included
-            6. Ensure proper authority designation and signatures
-            7. Check date format (DD/MM/YYYY)
-            8. Verify department/authority credentials
-            9. Ensure accessibility for diverse Indian population
+            2. Ensure proper formatting for the specified language
+            3. Check cultural sensitivity and appropriate tone
+            4. Verify all required contact information is included
+            5. Ensure proper authority designation and signatures
+            6. Check date format (DD/MM/YYYY)
+            7. Verify department/authority credentials
+            8. Ensure accessibility for diverse Indian population
+            9. Ensure the notice is properly formatted in markdown
             
             Indian Government Specific Checks:
             - Proper use of government letterhead format
             - Inclusion of reference number (if applicable)
-            - Appropriate use of official English language
-            - Compliance with Right to Information Act
+            - Appropriate use of official language as specified
             - Proper grievance redressal mechanism mention
+            - Ensure markdown formatting is consistent and readable
             
-            IMPORTANT: Provide ONLY the final approved notice in English. Do not provide any feedback, comments, 
+            IMPORTANT: Provide ONLY the final approved notice in {language} using markdown format. Do not provide any feedback, comments, 
             suggestions, or explanatory text. Only output the complete, final formatted notice ready for publication.
             ''',
-            expected_output='Final approved Indian government notice in English (notice content only, no feedback or comments)',
+            expected_output=f'Final approved Indian government notice in {language} formatted in markdown (notice content only, no feedback or comments)',
             agent=agent
         )
-        logger.info("Reviewer task created successfully.")
+        logger.info("Reviewer task for %s created successfully.", language)
         return task

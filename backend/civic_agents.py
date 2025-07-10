@@ -23,11 +23,12 @@ class CivicAgent():
         logger.info("Creating Public Notice Generator Agent")
         return Agent(
             role="Public Notice Generator",
-            goal="Generate clear, structured public notices in English only that meet Indian government standards and RTI compliance requirements",
+            goal="Generate clear, structured public notices in the specified language that meet Indian government standards and RTI compliance requirements, formatted in markdown",
             backstory='''You are an expert in Indian government communication standards and public announcement protocols. 
-            You specialize in creating official notices in English that comply with Indian bureaucratic formats, RTI guidelines, and 
-            accessibility standards. You understand and follow proper government formatting conventions. You are familiar with various Indian government notice types 
-            including maintenance, emergency, tender, tax, recruitment, and public meeting notices. You generate only the final notice content without any explanatory text or feedback.''',
+            You specialize in creating official notices that comply with Indian bureaucratic formats, and 
+            accessibility standards. You understand and follow proper government formatting conventions. 
+            You are familiar with various Indian government notice types including maintenance, emergency, tender, tax, recruitment, and public meeting notices. 
+            You generate only the final notice content in the requested language formatted in markdown without any explanatory text or feedback.''',
             verbose=False,
             allow_delegation=True,
             llm=self.llm
@@ -41,12 +42,12 @@ class CivicAgent():
         logger.info("Creating Indian Government Notice Reviewer & Compliance Officer Agent")
         return Agent(
             role="Indian Government Notice Reviewer & Compliance Officer",
-            goal='Review and finalize notices ensuring compliance with Indian government standards, RTI guidelines, and provide only the final approved notice without any feedback or comments',
-            backstory='''You are a seasoned Indian government communications reviewer with expertise in RTI compliance, 
+            goal='Review and finalize notices in the specified language ensuring compliance with Indian government standards, RTI guidelines, and provide only the final approved notice in markdown format without any feedback or comments',
+            backstory='''You are a seasoned Indian government communications reviewer with expertise in 
             official communication protocols, and public messaging standards. You ensure all notices meet Central/State 
-            government requirements in English language only, and maintain the dignity and authority expected in government communications. 
+            government requirements in the specified language, and maintain the dignity and authority expected in government communications. 
             You have experience with various government departments and understand the nuances of Indian administrative communication. 
-            You provide only the final approved notice without any review comments or feedback.''',
+            You provide only the final approved notice in the requested language formatted in markdown without any review comments or feedback.''',
             verbose=False,
             allow_delegation=False,
             llm=self.llm
