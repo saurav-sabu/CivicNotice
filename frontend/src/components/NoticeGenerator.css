@@ -107,6 +107,16 @@
 	outline: none;
 }
 
+select {
+	border: 2px solid #d1d5db;
+	background-color: white;
+}
+
+select :focus {
+	border-color: #14b8a6;
+	outline: none;
+}
+
 .input-error {
 	border: 2px solid red;
 	background-color: #ffe6e6;
