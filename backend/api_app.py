@@ -144,7 +144,7 @@ class CivicCrew():
                     email=self.email,
                     additional_notes=self.additional_notes
                 )
-                review_notice_task = task.indian_notice_reviewer_task(agent=indian_notice_reviewer)
+                review_notice_task = task.indian_notice_reviewer_task(agent=indian_notice_reviewer,language=self.language)
             except Exception as e:
                 logger.error(f"Error creating tasks: {e}")
                 raise
